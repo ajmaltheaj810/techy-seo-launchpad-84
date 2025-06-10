@@ -25,7 +25,7 @@ const WhyChooseUs = () => {
   return (
     <section id="about" className="py-20 bg-black">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" data-aos="fade-up">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Why Choose Us</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             We deliver results that matter to your business growth
@@ -34,7 +34,12 @@ const WhyChooseUs = () => {
         
         <div className="grid md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="bg-gray-900/50 border-gray-700 hover:border-yellow-400/50 transition-all duration-300 group">
+            <Card 
+              key={index} 
+              className="bg-gray-900/50 border-gray-700 hover:border-yellow-400/50 transition-all duration-300 group"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center">
                   {feature.icon}

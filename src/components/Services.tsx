@@ -25,7 +25,7 @@ const Services = () => {
   return (
     <section id="services" className="py-20 bg-gray-900">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16" data-aos="fade-up">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Our SEO Services</h2>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
             Comprehensive SEO solutions tailored to grow your online presence
@@ -34,7 +34,12 @@ const Services = () => {
         
         <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card key={index} className="bg-black/50 border-gray-700 hover:border-yellow-400/50 transition-all duration-300 group hover:transform hover:scale-105">
+            <Card 
+              key={index} 
+              className="bg-black/50 border-gray-700 hover:border-yellow-400/50 transition-all duration-300 group hover:transform hover:scale-105"
+              data-aos="fade-up"
+              data-aos-delay={index * 100}
+            >
               <CardContent className="p-8 text-center">
                 <div className="mb-6 flex justify-center group-hover:animate-pulse">
                   {service.icon}

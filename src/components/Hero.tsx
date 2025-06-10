@@ -13,7 +13,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 text-center relative z-10">
         <div className="mb-8" data-aos="fade-down" data-aos-delay="200">
           <img 
-            src="/lovable-uploads/7f640042-4d9b-47fa-855d-520cc99b92b9.png" 
+            src="/lovable-uploads/41be5862-f5fa-437f-b87c-054658b2e61c.png" 
             alt="TS Techy Logo" 
             className="h-24 w-auto mx-auto mb-6"
           />

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { DollarSign, Users, TrendingUp, Shield, Award, Rocket } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -47,25 +46,19 @@ const WhyChooseUs = () => {
         speed={0.2}
         className="absolute top-20 left-10 w-24 h-24 border border-yellow-400/10 opacity-30"
         style={{ transform: 'rotate(45deg)' }}
-      >
-        <div />
-      </ParallaxContainer>
+      />
       
       <ParallaxContainer 
         speed={0.4}
         direction="down"
         className="absolute bottom-20 right-10 w-32 h-32 border border-yellow-400/8 rounded-full opacity-20"
-      >
-        <div />
-      </ParallaxContainer>
+      />
       
       <ParallaxContainer 
         speed={0.3}
         className="absolute top-1/2 left-1/4 w-20 h-20 bg-yellow-400/5 opacity-40"
         style={{ transform: 'rotate(12deg)' }}
-      >
-        <div />
-      </ParallaxContainer>
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}

@@ -17,51 +17,25 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
-  const encode = (data: Record<string, string>) => {
-    return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    try {
-      const response = await fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "contact",
-          ...formData
-        })
-      });
-
-      if (response.ok) {
-        console.log('Form submitted successfully to Netlify');
-        toast({
-          title: "Message Sent!",
-          description: "We'll get back to you within 24 hours.",
-        });
-        
-        setIsSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
-        
-        // Reset success state after 3 seconds
-        setTimeout(() => setIsSubmitted(false), 3000);
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      toast({
-        title: "Error",
-        description: "There was a problem sending your message. Please try again.",
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    console.log('Form submitted:', formData);
+    toast({
+      title: "Message Sent!",
+      description: "We'll get back to you within 24 hours.",
+    });
+    
+    setIsSubmitted(true);
+    setIsSubmitting(false);
+    setFormData({ name: '', email: '', message: '' });
+    
+    // Reset success state after 3 seconds
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -75,13 +49,6 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-gray-900 to-black">
-      {/* Hidden form for Netlify to detect */}
-      <form name="contact" netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <textarea name="message"></textarea>
-      </form>
-
       <div className="container mx-auto px-4">
         <div className="text-center mb-16" data-aos="fade-up">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Get Your Free Consultation</h2>
@@ -96,8 +63,7 @@ const Contact = () => {
               <CardTitle className="text-2xl text-white text-center">Contact Us</CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} name="contact" method="POST" data-netlify="true" className="space-y-6">
-                <input type="hidden" name="form-name" value="contact" />
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="group">
                   <Input
                     type="text"

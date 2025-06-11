@@ -99,30 +99,28 @@
 
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
   }
 
   .animate-slide-up {
     animation: slideUp 0.8s ease-out forwards;
   }
 
-  .animate-scale-in {
-    animation: scaleIn 0.5s ease-out forwards;
+  .parallax-element {
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
   from {
     opacity: 0;
     transform: translateY(30px);
@@ -133,15 +131,45 @@
   }
 }
 
-@keyframes scaleIn {
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+  75% {
+    transform: translateY(-15px) rotate(1deg);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.1);
+  }
+}
+
+@keyframes slideUp {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translateY(0);
   }
+}
+
+/* Parallax optimizations */
+.parallax-container {
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 
 /* Smooth scrolling */
@@ -169,67 +197,39 @@ html {
   background: linear-gradient(45deg, #4b5563, #f59e0b);
 }
 
-/* Parallax Performance Optimizations */
+/* Particle effects */
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(90deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px) rotate(180deg);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-30px) translateX(-10px) rotate(270deg);
+    opacity: 0.5;
+  }
+}
+
+/* Performance optimizations */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
-  will-change: transform;
 }
 
-/* Enhanced parallax support */
-@supports (transform: translate3d(0, 0, 0)) {
-  .gpu-accelerated {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-/* Reduce motion for accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .gpu-accelerated {
-    transform: none !important;
-    will-change: auto;
-  }
-  
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* Professional hover effects */
-.professional-card {
+/* Investment-focused hover effects */
+.investment-card {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.professional-card:hover {
-  transform: translateY(-5px) scale(1.02);
+.investment-card:hover {
+  transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 25px -5px rgba(255, 215, 0, 0.1), 0 10px 10px -5px rgba(255, 215, 0, 0.04);
-}
-
-/* Consistent button styles */
-.btn-primary {
-  @apply bg-gradient-to-r from-yellow-400 to-yellow-600 hover:from-yellow-500 hover:to-yellow-700 text-black font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl;
-}
-
-/* Text gradient utility */
-.text-gradient {
-  @apply text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600;
-}
-
-/* Mobile optimization for parallax */
-@media (max-width: 768px) {
-  .gpu-accelerated {
-    transform: none;
-    will-change: auto;
-  }
-}
-
-/* Low power mode detection */
-@media (prefers-reduced-motion: reduce), (update: slow) {
-  .gpu-accelerated {
-    transform: none !important;
-    will-change: auto !important;
-  }
 }

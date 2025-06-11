@@ -1,32 +1,12 @@
-
-import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import Services from '@/components/Services';
-import WhyChooseUs from '@/components/WhyChooseUs';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+// Update this page (the content is just a fallback if you fail to update the page)
 
 const Index = () => {
-  useEffect(() => {
-    AOS.init({
-      duration: 800,
-      easing: 'ease-out-cubic',
-      once: true,
-      offset: 50,
-    });
-  }, []);
-
   return (
-    <div className="min-h-screen">
-      <Header />
-      <Hero />
-      <Services />
-      <WhyChooseUs />
-      <Contact />
-      <Footer />
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
+        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+      </div>
     </div>
   );
 };

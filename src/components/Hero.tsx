@@ -1,13 +1,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import ParallaxContainer from '@/components/ParallaxContainer';
 
 const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -17,35 +18,32 @@ const Hero = () => {
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center relative overflow-hidden">
-      {/* Simple Background Elements */}
-      <div 
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.08)_0%,transparent_50%)]"
-        style={{ transform: `translateY(${scrollY * 0.3}px)` }}
+      {/* Parallax Background Layer */}
+      <ParallaxContainer 
+        speed={0.3} 
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.08)_0%,transparent_70%)]"
       />
       
-      {/* Clean Geometric Shapes */}
-      <div 
-        className="absolute top-20 left-10 w-24 h-24 border border-yellow-400/20 rotate-45"
-        style={{ 
-          transform: `translateY(${scrollY * 0.2}px) rotate(45deg)`,
-          transition: 'transform 0.1s linear'
-        }}
+      {/* Parallax Geometric Elements */}
+      <ParallaxContainer 
+        speed={0.2}
+        className="absolute top-20 left-10 w-24 h-24 border border-yellow-400/20"
+        style={{ transform: 'rotate(45deg)' }}
       />
-      <div 
+      
+      <ParallaxContainer 
+        speed={0.4}
+        direction="down"
         className="absolute bottom-20 right-10 w-20 h-20 border border-yellow-400/15 rounded-full"
-        style={{ 
-          transform: `translateY(${scrollY * -0.15}px)`,
-          transition: 'transform 0.1s linear'
-        }}
       />
-      <div 
-        className="absolute top-1/2 right-20 w-16 h-16 bg-yellow-400/5 transform rotate-12"
-        style={{ 
-          transform: `translateY(${scrollY * 0.25}px) rotate(12deg)`,
-          transition: 'transform 0.1s linear'
-        }}
+      
+      <ParallaxContainer 
+        speed={0.6}
+        className="absolute top-1/2 right-20 w-16 h-16 bg-yellow-400/5"
+        style={{ transform: 'rotate(12deg)' }}
       />
 
+      {/* Foreground Content */}
       <div className="container mx-auto px-4 text-center relative z-10">
         <div 
           className="mb-8 animate-fade-in"
@@ -92,7 +90,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Simple Scroll Indicator */}
+      {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <div className="w-6 h-10 border-2 border-yellow-400/50 rounded-full flex justify-center animate-pulse">
           <div className="w-1 h-3 bg-yellow-400 rounded-full mt-2"></div>

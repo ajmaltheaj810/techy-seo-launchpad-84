@@ -169,11 +169,33 @@ html {
   background: linear-gradient(45deg, #4b5563, #f59e0b);
 }
 
-/* Performance optimizations */
+/* Parallax Performance Optimizations */
 .gpu-accelerated {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
+  will-change: transform;
+}
+
+/* Enhanced parallax support */
+@supports (transform: translate3d(0, 0, 0)) {
+  .gpu-accelerated {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .gpu-accelerated {
+    transform: none !important;
+    will-change: auto;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 /* Professional hover effects */
@@ -196,15 +218,18 @@ html {
   @apply text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-600;
 }
 
-/* Clean animations for better performance */
-@media (prefers-reduced-motion: no-preference) {
-  .animate-on-scroll {
-    animation: fadeIn 0.6s ease-out;
+/* Mobile optimization for parallax */
+@media (max-width: 768px) {
+  .gpu-accelerated {
+    transform: none;
+    will-change: auto;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-on-scroll {
-    animation: none;
+/* Low power mode detection */
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .gpu-accelerated {
+    transform: none !important;
+    will-change: auto !important;
   }
 }

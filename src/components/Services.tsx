@@ -1,7 +1,7 @@
-
 import React, { useEffect, useState } from 'react';
 import { Search, FileText, BarChart, TrendingUp, Target, Zap, Star, ArrowRight, CheckCircle, DollarSign } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import ParallaxContainer from '@/components/ParallaxContainer';
 
 const Services = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -9,7 +9,7 @@ const Services = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -58,23 +58,18 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
-      {/* Clean Background Elements */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div 
-          className="absolute top-20 left-20 w-32 h-32 border border-yellow-400/30 rounded-full"
-          style={{ 
-            transform: `translateY(${scrollY * 0.05}px)`,
-            transition: 'transform 0.1s linear'
-          }}
-        />
-        <div 
-          className="absolute bottom-20 right-20 w-28 h-28 border border-purple-400/20 rounded-lg rotate-45"
-          style={{ 
-            transform: `translateY(${scrollY * -0.03}px) rotate(45deg)`,
-            transition: 'transform 0.1s linear'
-          }}
-        />
-      </div>
+      {/* Parallax Background Elements */}
+      <ParallaxContainer 
+        speed={0.3}
+        className="absolute top-20 left-20 w-32 h-32 border border-yellow-400/30 rounded-full opacity-20"
+      />
+      
+      <ParallaxContainer 
+        speed={0.4}
+        direction="down"
+        className="absolute bottom-20 right-20 w-28 h-28 border border-purple-400/20 rounded-lg opacity-30"
+        style={{ transform: 'rotate(45deg)' }}
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header Section */}
@@ -112,100 +107,107 @@ const Services = () => {
           </div>
         </div>
         
-        {/* Service Cards */}
+        {/* Service Cards with Parallax */}
         <div className="grid md:grid-cols-3 gap-8 mb-20">
           {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="bg-black/70 backdrop-blur-sm border-gray-700 hover:border-yellow-400/60 transition-all duration-500 group relative overflow-hidden cursor-pointer h-full"
-              data-aos="fade-up"
-              data-aos-delay={index * 150}
-              onMouseEnter={() => setHoveredCard(index)}
-              onMouseLeave={() => setHoveredCard(null)}
+            <ParallaxContainer
+              key={index}
+              speed={0.2 + index * 0.1}
+              className="h-full"
             >
-              {/* Hover Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+              <Card 
+                className="bg-black/70 backdrop-blur-sm border-gray-700 hover:border-yellow-400/60 transition-all duration-500 group relative overflow-hidden cursor-pointer h-full"
+                data-aos="fade-up"
+                data-aos-delay={index * 150}
+                onMouseEnter={() => setHoveredCard(index)}
+                onMouseLeave={() => setHoveredCard(null)}
+              >
+                {/* Hover Background */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
 
-              <CardContent className="p-8 text-center relative z-20 h-full flex flex-col">
-                {/* Icon */}
-                <div className="mb-6 flex justify-center">
-                  <div className="p-4 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-full border border-yellow-400/40 group-hover:border-yellow-400/80 transition-all duration-300 group-hover:scale-110">
-                    {service.icon}
+                <CardContent className="p-8 text-center relative z-20 h-full flex flex-col">
+                  {/* Icon */}
+                  <div className="mb-6 flex justify-center">
+                    <div className="p-4 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-full border border-yellow-400/40 group-hover:border-yellow-400/80 transition-all duration-300 group-hover:scale-110">
+                      {service.icon}
+                    </div>
                   </div>
-                </div>
 
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-yellow-400 transition-colors duration-300">
-                  {service.title}
-                </h3>
+                  <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-yellow-400 transition-colors duration-300">
+                    {service.title}
+                  </h3>
 
-                <p className="text-gray-300 leading-relaxed mb-6 group-hover:text-gray-200 transition-colors duration-300 flex-grow">
-                  {service.description}
-                </p>
+                  <p className="text-gray-300 leading-relaxed mb-6 group-hover:text-gray-200 transition-colors duration-300 flex-grow">
+                    {service.description}
+                  </p>
 
-                {/* Features List */}
-                <div className="mb-6 space-y-3">
-                  <div className="flex items-center justify-center space-x-2 text-sm font-bold text-yellow-400">
-                    <TrendingUp className="h-4 w-4" />
-                    <span>{service.roi}</span>
+                  {/* Features List */}
+                  <div className="mb-6 space-y-3">
+                    <div className="flex items-center justify-center space-x-2 text-sm font-bold text-yellow-400">
+                      <TrendingUp className="h-4 w-4" />
+                      <span>{service.roi}</span>
+                    </div>
+                    
+                    {service.features.map((feature, featureIndex) => (
+                      <div 
+                        key={featureIndex}
+                        className="flex items-center justify-center space-x-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300"
+                      >
+                        <CheckCircle className="h-4 w-4 text-green-400" />
+                        <span>{feature}</span>
+                      </div>
+                    ))}
                   </div>
                   
-                  {service.features.map((feature, featureIndex) => (
-                    <div 
-                      key={featureIndex}
-                      className="flex items-center justify-center space-x-2 text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300"
-                    >
-                      <CheckCircle className="h-4 w-4 text-green-400" />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Metrics Badge */}
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-400/15 to-orange-500/15 border border-yellow-400/40 rounded-full px-6 py-3 text-yellow-400 text-sm font-bold group-hover:from-yellow-400/25 group-hover:to-orange-500/25 group-hover:border-yellow-400/60 transition-all duration-300">
-                  <BarChart className="h-4 w-4" />
-                  <span>{service.metrics}</span>
-                </div>
+                  {/* Metrics Badge */}
+                  <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-yellow-400/15 to-orange-500/15 border border-yellow-400/40 rounded-full px-6 py-3 text-yellow-400 text-sm font-bold group-hover:from-yellow-400/25 group-hover:to-orange-500/25 group-hover:border-yellow-400/60 transition-all duration-300">
+                    <BarChart className="h-4 w-4" />
+                    <span>{service.metrics}</span>
+                  </div>
 
-                {/* CTA */}
-                <div 
-                  className="mt-6 transition-all duration-300"
-                  style={{
-                    opacity: hoveredCard === index ? 1 : 0,
-                    transform: hoveredCard === index ? 'translateY(0)' : 'translateY(10px)'
-                  }}
-                >
-                  <div className="flex items-center justify-center space-x-2 text-yellow-400 font-semibold">
-                    <span>Explore Investment Potential</span>
-                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  {/* CTA */}
+                  <div 
+                    className="mt-6 transition-all duration-300"
+                    style={{
+                      opacity: hoveredCard === index ? 1 : 0,
+                      transform: hoveredCard === index ? 'translateY(0)' : 'translateY(10px)'
+                    }}
+                  >
+                    <div className="flex items-center justify-center space-x-2 text-yellow-400 font-semibold">
+                      <span>Explore Investment Potential</span>
+                      <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                  </div>
+
+                  {/* Bottom Accent */}
+                  <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
+                </CardContent>
+              </Card>
+            </ParallaxContainer>
+          ))}
+        </div>
+
+        {/* Stats Section with Parallax */}
+        <ParallaxContainer speed={0.3}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16" data-aos="fade-up" data-aos-delay="600">
+            {stats.map((stat, index) => (
+              <div 
+                key={index} 
+                className="text-center group bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg p-6 hover:border-yellow-400/60 hover:bg-white/10 transition-all duration-300"
+              >
+                <div className="flex justify-center mb-3">
+                  <div className="p-3 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-full text-yellow-400 group-hover:scale-110 transition-transform duration-300">
+                    {stat.icon}
                   </div>
                 </div>
-
-                {/* Bottom Accent */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16" data-aos="fade-up" data-aos-delay="600">
-          {stats.map((stat, index) => (
-            <div 
-              key={index} 
-              className="text-center group bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg p-6 hover:border-yellow-400/60 hover:bg-white/10 transition-all duration-300"
-            >
-              <div className="flex justify-center mb-3">
-                <div className="p-3 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 rounded-full text-yellow-400 group-hover:scale-110 transition-transform duration-300">
-                  {stat.icon}
+                <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-2 group-hover:from-yellow-300 group-hover:to-orange-400 transition-all duration-300">
+                  {stat.number}
                 </div>
+                <div className="text-gray-300 text-sm uppercase tracking-wider font-semibold group-hover:text-gray-200 transition-colors duration-300">{stat.label}</div>
               </div>
-              <div className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 mb-2 group-hover:from-yellow-300 group-hover:to-orange-400 transition-all duration-300">
-                {stat.number}
-              </div>
-              <div className="text-gray-300 text-sm uppercase tracking-wider font-semibold group-hover:text-gray-200 transition-colors duration-300">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </ParallaxContainer>
 
         {/* CTA Section */}
         <div className="text-center" data-aos="fade-up" data-aos-delay="800">

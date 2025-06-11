@@ -3,12 +3,13 @@ import React, { ReactNode } from 'react';
 import { useParallax } from '@/hooks/useParallax';
 
 interface ParallaxContainerProps {
-  children: ReactNode;
+  children?: ReactNode;
   speed?: number;
   direction?: 'up' | 'down';
   enableOnMobile?: boolean;
   className?: string;
   as?: keyof JSX.IntrinsicElements;
+  style?: React.CSSProperties;
 }
 
 const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
@@ -17,7 +18,8 @@ const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
   direction = 'up',
   enableOnMobile = false,
   className = '',
-  as: Component = 'div'
+  as: Component = 'div',
+  style = {}
 }) => {
   const parallaxRef = useParallax({
     speed,
@@ -30,7 +32,7 @@ const ParallaxContainer: React.FC<ParallaxContainerProps> = ({
     {
       ref: parallaxRef,
       className: `${className} gpu-accelerated`,
-      style: { willChange: 'transform' }
+      style: { willChange: 'transform', ...style }
     },
     children
   );

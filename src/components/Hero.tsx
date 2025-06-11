@@ -22,26 +22,34 @@ const Hero = () => {
       <ParallaxContainer 
         speed={0.3} 
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,215,0,0.08)_0%,transparent_70%)]"
-      />
+      >
+        <div />
+      </ParallaxContainer>
       
       {/* Parallax Geometric Elements */}
       <ParallaxContainer 
         speed={0.2}
         className="absolute top-20 left-10 w-24 h-24 border border-yellow-400/20"
         style={{ transform: 'rotate(45deg)' }}
-      />
+      >
+        <div />
+      </ParallaxContainer>
       
       <ParallaxContainer 
         speed={0.4}
         direction="down"
         className="absolute bottom-20 right-10 w-20 h-20 border border-yellow-400/15 rounded-full"
-      />
+      >
+        <div />
+      </ParallaxContainer>
       
       <ParallaxContainer 
         speed={0.6}
         className="absolute top-1/2 right-20 w-16 h-16 bg-yellow-400/5"
         style={{ transform: 'rotate(12deg)' }}
-      />
+      >
+        <div />
+      </ParallaxContainer>
 
       {/* Foreground Content */}
       <div className="container mx-auto px-4 text-center relative z-10">

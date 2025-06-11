@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Search, FileText, BarChart, TrendingUp, Target, Zap, Star, ArrowRight, CheckCircle, DollarSign } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -62,14 +63,18 @@ const Services = () => {
       <ParallaxContainer 
         speed={0.3}
         className="absolute top-20 left-20 w-32 h-32 border border-yellow-400/30 rounded-full opacity-20"
-      />
+      >
+        <div />
+      </ParallaxContainer>
       
       <ParallaxContainer 
         speed={0.4}
         direction="down"
         className="absolute bottom-20 right-20 w-28 h-28 border border-purple-400/20 rounded-lg opacity-30"
         style={{ transform: 'rotate(45deg)' }}
-      />
+      >
+        <div />
+      </ParallaxContainer>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header Section */}
